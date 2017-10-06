@@ -1,6 +1,7 @@
 #ifndef TRIANGLEWINDOW_H
 #define TRIANGLEWINDOW_H
 
+#include "axis.h"
 #include "openglwindow.h"
 #include "surfacerenderable.h"
 #include <QVector>
@@ -20,6 +21,7 @@ public:
 
 private:
   unique_ptr<SurfaceRenderable> r;
+  unique_ptr<Axis> axis;
   QMatrix4x4 m_projectionMatrix;
   int m_frame;
 };

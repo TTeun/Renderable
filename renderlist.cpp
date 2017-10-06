@@ -1,6 +1,6 @@
 #include "renderlist.h"
 
-RenderList::RenderList() : r(new SurfaceRenderable()), m_frame(0)
+RenderList::RenderList() : r(new SurfaceRenderable()), axis(new Axis()), m_frame(0)
 {
 }
 
@@ -17,8 +17,8 @@ void RenderList::initialize()
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-  r->createBuffers(this);
-  r->createShader(this);
+  r->init(this);
+  axis->init(this);
   qDebug() << "init";
 }
 
@@ -34,6 +34,7 @@ void RenderList::render()
   m_projectionMatrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0.5, 0.4, 0);
 
   r->render(m_glFunctions, m_projectionMatrix);
+  axis->render(m_glFunctions, m_projectionMatrix);
 
   ++m_frame;
 }

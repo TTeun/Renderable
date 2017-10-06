@@ -17,6 +17,7 @@ public:
   virtual void initialize();
   void setAnimating(bool animating);
   static unsigned int const maxIndex;
+  QOpenGLFunctions_4_1_Core *glFunctions();
 
 public slots:
   void renderLater();

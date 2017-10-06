@@ -106,3 +106,8 @@ void OpenGLWindow::setAnimating(bool animating)
   if (animating)
     renderLater();
 }
+
+QOpenGLFunctions_4_1_Core *OpenGLWindow::glFunctions()
+{
+  return m_glFunctions;
+}

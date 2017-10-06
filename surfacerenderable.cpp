@@ -1,4 +1,5 @@
 #include "surfacerenderable.h"
+#include "openglwindow.h"
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -16,9 +17,15 @@ SurfaceRenderable::~SurfaceRenderable()
 {
 }
 
-void SurfaceRenderable::createShader(QObject *glFunctions)
+void SurfaceRenderable::init(OpenGLWindow *openGLWindow)
 {
-  m_shaderProgram = new QOpenGLShaderProgram(glFunctions);
+  createBuffers(openGLWindow->glFunctions());
+  createShader(openGLWindow);
+}
+
+void SurfaceRenderable::createShader(QObject *obj)
+{
+  m_shaderProgram = new QOpenGLShaderProgram(obj);
   m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Renderable/shaders/vertshader.glsl");
   m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Renderable/shaders/fragshader.glsl");
   m_shaderProgram->link();
@@ -31,14 +38,13 @@ void SurfaceRenderable::createShader(QObject *glFunctions)
 void SurfaceRenderable::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projectionMatrix)
 {
   glFunctions->glBindVertexArray(m_vao);
+
   m_shaderProgram->bind();
   m_modelViewMatrix.setToIdentity();
   m_shaderProgram->setUniformValue(m_modelViewMatrixUniform, m_modelViewMatrix);
   m_shaderProgram->setUniformValue(m_projecionMatrixUniform, projectionMatrix);
   m_shaderProgram->setUniformValue(m_readNormalsUniform, m_state.readNormals);
-
   updateBuffers(glFunctions);
-
   glPolygonMode(GL_FRONT_AND_BACK, m_state.polygonMode);
   glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
 
