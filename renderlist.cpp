@@ -1,25 +1,28 @@
 #include "renderlist.h"
 
-RenderList::RenderList() : r(new SurfaceRenderable()), axis(new Axis()), m_frame(0)
+RenderList::RenderList() : ball(new BallRenderable()), axis(new Axis())
 {
 }
 
 void RenderList::initialize()
 {
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //  glEnable(GL_BLEND);
+  //  glBlendEquationSeparate(GL_MIN, GL_MIN);
 
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+
   glEnable(GL_PRIMITIVE_RESTART);
   glPrimitiveRestartIndex(maxIndex);
 
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glPolygonMode(GL_FRONT, GL_FILL);
 
-  r->init(this);
+  ball->init(this);
+  ball->create();
   axis->init(this);
-  qDebug() << "init";
 }
 
 void RenderList::render()
@@ -31,10 +34,13 @@ void RenderList::render()
   m_projectionMatrix.setToIdentity();
   m_projectionMatrix.perspective(80.0f, width() / static_cast<float>(height()), 0.1f, 100.0f);
   m_projectionMatrix.translate(0, 0, -2);
-  m_projectionMatrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0.5, 0.4, 0);
+  m_projectionMatrix.rotate(ewAngle / screen()->refreshRate(), 0, 1, 0);
+  m_projectionMatrix.rotate(nsAngle / screen()->refreshRate(), 1, 0, 0);
 
-  r->render(m_glFunctions, m_projectionMatrix);
+  nsAngle += 20;
+
+  glEnable(GL_BLEND);
+  ball->render(m_glFunctions, m_projectionMatrix);
+  glDisable(GL_BLEND);
   axis->render(m_glFunctions, m_projectionMatrix);
-
-  ++m_frame;
 }

@@ -2,8 +2,8 @@
 #define TRIANGLEWINDOW_H
 
 #include "axis.h"
+#include "ballrenderable.h"
 #include "openglwindow.h"
-#include "surfacerenderable.h"
 #include <QVector>
 #include <QtCore/qmath.h>
 #include <QtGui/QMatrix4x4>
@@ -20,10 +20,11 @@ public:
   void render() override;
 
 private:
-  unique_ptr<SurfaceRenderable> r;
+  unique_ptr<BallRenderable> ball;
   unique_ptr<Axis> axis;
   QMatrix4x4 m_projectionMatrix;
-  int m_frame;
+  float nsAngle = 0.0f;
+  float ewAngle = 0.0f;
 };
 
 #endif // TRIANGLEWINDOW_H

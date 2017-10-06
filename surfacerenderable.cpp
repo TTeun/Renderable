@@ -10,7 +10,6 @@ SurfaceRenderable::SurfaceRenderable()
       m_normals(new QVector<QVector3D>()),
       m_indices(new QVector<unsigned int>())
 {
-  load_obj("../airboat.obj");
 }
 
 SurfaceRenderable::~SurfaceRenderable()

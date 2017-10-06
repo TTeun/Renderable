@@ -19,6 +19,7 @@ public:
 
   void init(OpenGLWindow *openGLWindow) override;
   void render(QOpenGLFunctions_4_1_Core *ui, QMatrix4x4 &projectionMatrix) override;
+  void load_obj(const char *filename);
 
 protected:
   void createBuffers(QOpenGLFunctions_4_1_Core *ui) override;
@@ -30,7 +31,6 @@ protected:
   unique_ptr<QVector<unsigned int>> m_indices;
 
   void updateBuffers(QOpenGLFunctions_4_1_Core *ui);
-  void load_obj(const char *filename);
 
   uint m_coordsBO;
   uint m_colourBO;

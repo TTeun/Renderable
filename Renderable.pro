@@ -29,14 +29,16 @@ SOURCES += \
     renderable.cpp \
     renderlist.cpp \
     axis.cpp \
-    surfacerenderable.cpp
+    surfacerenderable.cpp \
+    ballrenderable.cpp
 
 HEADERS += \
     openglwindow.h \
     renderable.h \
     renderlist.h \
     axis.h \
-    surfacerenderable.h
+    surfacerenderable.h \
+    ballrenderable.h
 
 RESOURCES += \
       resources.qrc

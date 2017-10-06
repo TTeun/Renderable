@@ -31,7 +31,8 @@ void Axis::createShader(QObject *obj)
   m_shaderProgram = new QOpenGLShaderProgram(obj);
   m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex,
                                            "../Renderable/shaders/vertshader_simple.glsl");
-  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Renderable/shaders/fragshader.glsl");
+  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment,
+                                           "../Renderable/shaders/fragshader_simple.glsl");
   m_shaderProgram->link();
 
   m_projecionMatrixUniform = m_shaderProgram->uniformLocation("projectionMatrix");
