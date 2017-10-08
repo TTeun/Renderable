@@ -1,6 +1,7 @@
 #include "renderlist.h"
 
-RenderList::RenderList() : ball(new SurfaceRenderable()), axis(new Axis())
+RenderList::RenderList()
+    : m_shaderHandler(new ShaderHandler()), ball(new SurfaceRenderable()), axis(new Axis())
 {
 }
 
@@ -20,6 +21,7 @@ void RenderList::initialize()
 
   glPolygonMode(GL_FRONT, GL_FILL);
 
+  m_shaderHandler->createShaders(this);
   ball->init(this);
   //  ball->create();
   ball->load_obj("../Suzanne.obj");

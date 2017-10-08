@@ -1,8 +1,9 @@
 #ifndef TRIANGLEWINDOW_H
 #define TRIANGLEWINDOW_H
 
-#include "axis.h"
-#include "ballrenderable.h"
+#include "RenderableObjects/axis.h"
+#include "RenderableObjects/ballrenderable.h"
+#include "ShaderHandler/shaderhandler.h"
 #include "openglwindow.h"
 #include <QVector>
 #include <QtCore/qmath.h>
@@ -20,6 +21,7 @@ public:
   void render() override;
 
 private:
+  ShaderHandler *m_shaderHandler;
   unique_ptr<SurfaceRenderable> ball;
   unique_ptr<Axis> axis;
   QMatrix4x4 m_projectionMatrix;

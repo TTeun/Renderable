@@ -26,19 +26,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     openglwindow.cpp \
-    renderable.cpp \
+    RenderableObjects/renderable.cpp \
     renderlist.cpp \
-    axis.cpp \
-    surfacerenderable.cpp \
-    ballrenderable.cpp
+    RenderableObjects/axis.cpp \
+    RenderableObjects/surfacerenderable.cpp \
+    RenderableObjects/ballrenderable.cpp \
+    ShaderHandler/shaderhandler.cpp \
+    ShaderHandler/shader.cpp
 
 HEADERS += \
     openglwindow.h \
-    renderable.h \
+    RenderableObjects/renderable.h \
     renderlist.h \
-    axis.h \
-    surfacerenderable.h \
-    ballrenderable.h
+    RenderableObjects/axis.h \
+    RenderableObjects/surfacerenderable.h \
+    RenderableObjects/ballrenderable.h \
+    ShaderHandler/shaderhandler.h \
+    ShaderHandler/shader.h
 
 RESOURCES += \
       resources.qrc
