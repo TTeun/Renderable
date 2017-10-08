@@ -31,8 +31,8 @@ SOURCES += \
     RenderableObjects/axis.cpp \
     RenderableObjects/surfacerenderable.cpp \
     RenderableObjects/ballrenderable.cpp \
-    ShaderHandler/shaderhandler.cpp \
-    ShaderHandler/shader.cpp
+    ShaderHandler/mainshader.cpp \
+    ShaderHandler/blackshader.cpp
 
 HEADERS += \
     openglwindow.h \
@@ -41,8 +41,8 @@ HEADERS += \
     RenderableObjects/axis.h \
     RenderableObjects/surfacerenderable.h \
     RenderableObjects/ballrenderable.h \
-    ShaderHandler/shaderhandler.h \
-    ShaderHandler/shader.h
+    ShaderHandler/mainshader.h \
+    ShaderHandler/blackshader.h
 
 RESOURCES += \
       resources.qrc

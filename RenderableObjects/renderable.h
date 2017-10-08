@@ -2,7 +2,6 @@
 #define RENDERABLE_H
 
 #include <QOpenGLFunctions_4_1_Core>
-#include <QOpenGLShaderProgram>
 
 class OpenGLWindow;
 
@@ -17,9 +16,6 @@ public:
 
 protected:
   virtual void createBuffers(QOpenGLFunctions_4_1_Core *ui) = 0;
-  virtual void createShader(QObject *obj)                   = 0;
-
-  QOpenGLShaderProgram *m_shaderProgram;
   uint m_vao;
 };
 

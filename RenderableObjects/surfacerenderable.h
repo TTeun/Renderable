@@ -21,9 +21,11 @@ public:
   void render(QOpenGLFunctions_4_1_Core *ui, QMatrix4x4 &projectionMatrix) override;
   void load_obj(const char *filename);
 
+  QMatrix4x4 *modelViewMatrix() const;
+  void setModelViewMatrix(QMatrix4x4 *modelViewMatrix);
+
 protected:
   void createBuffers(QOpenGLFunctions_4_1_Core *ui) override;
-  void createShader(QObject *obj) override;
 
   unique_ptr<QVector<QVector3D>> m_vertices;
   unique_ptr<QVector<QVector4D>> m_colors;
@@ -37,20 +39,7 @@ protected:
   uint m_normalBO;
   uint m_indicesBO;
 
-  QMatrix4x4 m_modelViewMatrix;
-  GLint m_projecionMatrixUniform;
-  GLint m_modelViewMatrixUniform;
-  GLint m_readNormalsUniform;
-  GLint m_lightPosUniform;
-  QVector3D m_lightPos;
-
-  struct State
-  {
-    GLenum polygonMode = GL_FILL;
-    bool readNormals   = false;
-  };
-  State m_state;
-  GLint m_frame = 0;
+  QMatrix4x4 *m_modelViewMatrix;
 };
 
 #endif // SURFACERENDERABLE_H

@@ -23,7 +23,6 @@ QVector3D BallRenderable::atSphericalCoords(double polar_angle, double azi_angle
 
 void BallRenderable::create()
 {
-  m_state.readNormals = true;
   m_vertices->clear();
   m_vertices->squeeze();
   m_colors->clear();
@@ -70,4 +69,13 @@ void BallRenderable::create()
     m_colors->append(QVector4D(0.9, 0.9, 0.9, 0.2));
     m_normals->append(m_vertices->at(i));
   }
+}
+
+void BallRenderable::renderSkeleton(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projectionMatrix)
+{
+  glFunctions->glBindVertexArray(m_vao);
+
+  updateBuffers(glFunctions);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
 }

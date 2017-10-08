@@ -1,10 +1,9 @@
 #include "renderable.h"
 
-Renderable::Renderable() : m_shaderProgram(0)
+Renderable::Renderable()
 {
 }
 
 Renderable::~Renderable()
 {
-  delete m_shaderProgram;
 }

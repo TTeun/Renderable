@@ -1,8 +1,12 @@
 #include "renderlist.h"
 
 RenderList::RenderList()
-    : m_shaderHandler(new ShaderHandler()), ball(new SurfaceRenderable()), axis(new Axis())
+    : m_mainShader(new MainShader(this)),
+      m_blackShader(new BlackShader(this)),
+      ball(new BallRenderable()),
+      axis(new Axis())
 {
+  m_lightPos = QVector3D(0.0, 0.0, 1.0);
 }
 
 void RenderList::initialize()
@@ -13,19 +17,22 @@ void RenderList::initialize()
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LEQUAL);
 
-  //  glEnable(GL_CULL_FACE);
-  //  glCullFace(GL_BACK);
-
   glEnable(GL_PRIMITIVE_RESTART);
   glPrimitiveRestartIndex(maxIndex);
 
   glPolygonMode(GL_FRONT, GL_FILL);
 
-  m_shaderHandler->createShaders(this);
+  createShaders();
   ball->init(this);
-  //  ball->create();
-  ball->load_obj("../Suzanne.obj");
+  ball->create();
+  //  ball->load_obj("../Suzanne.obj");
   axis->init(this);
+}
+
+void RenderList::createShaders()
+{
+  m_mainShader->init();
+  m_blackShader->init();
 }
 
 void RenderList::render()
@@ -43,6 +50,14 @@ void RenderList::render()
   nsAngle += 20;
   ewAngle += 12;
 
+  m_mainShader->bind();
+  m_mainShader->updateUniforms(m_projectionMatrix, *ball->modelViewMatrix());
   ball->render(m_glFunctions, m_projectionMatrix);
+
+  m_blackShader->bind();
+  m_blackShader->updateUniforms(m_projectionMatrix, *ball->modelViewMatrix());
+  ball->renderSkeleton(m_glFunctions, m_projectionMatrix);
+
+  m_mainShader->bind();
   axis->render(m_glFunctions, m_projectionMatrix);
 }

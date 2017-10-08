@@ -26,19 +26,6 @@ Axis::~Axis()
 {
 }
 
-void Axis::createShader(QObject *obj)
-{
-  m_shaderProgram = new QOpenGLShaderProgram(obj);
-  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                           "../Renderable/shaders/vertshader_simple.glsl");
-  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                           "../Renderable/shaders/fragshader_simple.glsl");
-  m_shaderProgram->link();
-
-  m_projecionMatrixUniform = m_shaderProgram->uniformLocation("projectionMatrix");
-  m_modelViewMatrixUniform = m_shaderProgram->uniformLocation("modelViewMatrix");
-}
-
 void Axis::createBuffers(QOpenGLFunctions_4_1_Core *glFunctions)
 {
   glFunctions->glGenVertexArrays(1, &m_vao);
@@ -60,18 +47,10 @@ void Axis::createBuffers(QOpenGLFunctions_4_1_Core *glFunctions)
 void Axis::init(OpenGLWindow *openGLWindow)
 {
   createBuffers(openGLWindow->glFunctions());
-  createShader(openGLWindow);
 }
 
 void Axis::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projectionMatrix)
 {
-  glFunctions->glBindVertexArray(m_vao);
-
-  m_shaderProgram->bind();
-  m_modelViewMatrix.setToIdentity();
-  m_shaderProgram->setUniformValue(m_modelViewMatrixUniform, m_modelViewMatrix);
-  m_shaderProgram->setUniformValue(m_projecionMatrixUniform, projectionMatrix);
-
   glFunctions->glBindVertexArray(m_vao);
 
   glFunctions->glBindBuffer(GL_ARRAY_BUFFER, m_coordsBO);
@@ -83,6 +62,4 @@ void Axis::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projection
       GL_ARRAY_BUFFER, sizeof(QVector4D) * m_colors->size(), m_colors->data(), GL_DYNAMIC_DRAW);
 
   glFunctions->glDrawArrays(GL_LINES, 0, m_vertices->size());
-
-  m_shaderProgram->release();
 }

@@ -8,9 +8,9 @@ SurfaceRenderable::SurfaceRenderable()
     : m_vertices(new QVector<QVector3D>()),
       m_colors(new QVector<QVector4D>()),
       m_normals(new QVector<QVector3D>()),
-      m_indices(new QVector<unsigned int>())
+      m_indices(new QVector<unsigned int>()),
+      m_modelViewMatrix(new QMatrix4x4)
 {
-  m_lightPos = QVector3D(0.0, -4.0, -10);
 }
 
 SurfaceRenderable::~SurfaceRenderable()
@@ -20,40 +20,15 @@ SurfaceRenderable::~SurfaceRenderable()
 void SurfaceRenderable::init(OpenGLWindow *openGLWindow)
 {
   createBuffers(openGLWindow->glFunctions());
-  createShader(openGLWindow);
-}
-
-void SurfaceRenderable::createShader(QObject *obj)
-{
-  m_shaderProgram = new QOpenGLShaderProgram(obj);
-  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Renderable/shaders/vertshader.glsl");
-  m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Renderable/shaders/fragshader.glsl");
-  m_shaderProgram->link();
-
-  m_projecionMatrixUniform = m_shaderProgram->uniformLocation("projectionMatrix");
-  m_modelViewMatrixUniform = m_shaderProgram->uniformLocation("modelViewMatrix");
-  m_readNormalsUniform     = m_shaderProgram->uniformLocation("readNormals");
-  m_lightPosUniform        = m_shaderProgram->uniformLocation("lightPos");
 }
 
 void SurfaceRenderable::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projectionMatrix)
 {
   glFunctions->glBindVertexArray(m_vao);
 
-  m_shaderProgram->bind();
-  m_modelViewMatrix.setToIdentity();
-  m_shaderProgram->setUniformValue(m_modelViewMatrixUniform, m_modelViewMatrix);
-  m_shaderProgram->setUniformValue(m_projecionMatrixUniform, projectionMatrix);
-  m_shaderProgram->setUniformValue(m_readNormalsUniform, m_state.readNormals);
-  m_shaderProgram->setUniformValue(m_lightPosUniform, m_lightPos);
-
   updateBuffers(glFunctions);
-  //  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  //  glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
-
-  m_shaderProgram->release();
 }
 
 void SurfaceRenderable::createBuffers(QOpenGLFunctions_4_1_Core *glFunctions)
@@ -94,16 +69,23 @@ void SurfaceRenderable::updateBuffers(QOpenGLFunctions_4_1_Core *glFunctions)
   glFunctions->glBufferData(
       GL_ARRAY_BUFFER, sizeof(QVector4D) * m_colors->size(), m_colors->data(), GL_DYNAMIC_DRAW);
 
-  if (m_state.readNormals)
-  {
-    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, m_normalBO);
-    glFunctions->glBufferData(
-        GL_ARRAY_BUFFER, sizeof(QVector3D) * m_normals->size(), m_normals->data(), GL_DYNAMIC_DRAW);
-  }
+  glFunctions->glBindBuffer(GL_ARRAY_BUFFER, m_normalBO);
+  glFunctions->glBufferData(
+      GL_ARRAY_BUFFER, sizeof(QVector3D) * m_normals->size(), m_normals->data(), GL_DYNAMIC_DRAW);
 
   glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indicesBO);
   glFunctions->glBufferData(
       GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_indices->size(), m_indices->data(), GL_DYNAMIC_DRAW);
+}
+
+QMatrix4x4 *SurfaceRenderable::modelViewMatrix() const
+{
+  return m_modelViewMatrix;
+}
+
+void SurfaceRenderable::setModelViewMatrix(QMatrix4x4 *modelViewMatrix)
+{
+  m_modelViewMatrix = modelViewMatrix;
 }
 
 void SurfaceRenderable::load_obj(const char *filename)
@@ -147,7 +129,6 @@ void SurfaceRenderable::load_obj(const char *filename)
     }
     else if (line.substr(0, 3) == "vn ")
     {
-      m_state.readNormals = true;
     }
     else if (line[0] == '#')
     {

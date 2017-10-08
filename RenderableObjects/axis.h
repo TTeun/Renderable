@@ -2,6 +2,7 @@
 #define AXIS_H
 
 #include "renderable.h"
+#include <QMatrix4x4>
 #include <memory>
 
 class Axis : public Renderable
@@ -25,7 +26,6 @@ protected:
   GLint m_modelViewMatrixUniform;
 
   virtual void createBuffers(QOpenGLFunctions_4_1_Core *glFunctions);
-  virtual void createShader(QObject *obj);
 };
 
 #endif // AXIS_H

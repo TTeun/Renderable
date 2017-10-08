@@ -4,7 +4,6 @@ layout (location = 0) in vec3 in_coords;
 layout (location = 1) in vec4 in_colour;
 layout (location = 2) in vec3 in_normal;
 
-uniform bool readNormals;
 uniform vec3 lightPos;
 
 out vec4 fColor;
@@ -14,11 +13,6 @@ float scale (float a){
 }
 
 void main() {
-  if (readNormals){
     float theta = dot( normalize(in_normal), normalize(lightPos - in_coords));
-    fColor = vec4(scale(theta) * in_colour.rgb, in_colour.a);
-  }
-  else {
-    fColor = in_colour;
-  }
+    fColor = vec4(1 * in_colour.rgb, in_colour.a);
 }
