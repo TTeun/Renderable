@@ -1,7 +1,7 @@
 #include "axis.h"
 #include "openglwindow.h"
 
-Axis::Axis() : m_vertices(new QVector<QVector3D>()), m_colors(new QVector<QVector3D>())
+Axis::Axis() : m_vertices(new QVector<QVector3D>()), m_colors(new QVector<QVector4D>())
 {
   m_vertices->append(QVector3D(0, 0, 0));
   m_vertices->append(QVector3D(1, 0, 0));
@@ -12,14 +12,14 @@ Axis::Axis() : m_vertices(new QVector<QVector3D>()), m_colors(new QVector<QVecto
   m_vertices->append(QVector3D(0, 0, 0));
   m_vertices->append(QVector3D(0, 0, 1));
 
-  m_colors->append(QVector3D(1, 0, 0));
-  m_colors->append(QVector3D(1, 0, 0));
+  m_colors->append(QVector4D(1, 0, 0, 1));
+  m_colors->append(QVector4D(1, 0, 0, 1));
 
-  m_colors->append(QVector3D(0, 1, 0));
-  m_colors->append(QVector3D(0, 1, 0));
+  m_colors->append(QVector4D(0, 1, 0, 1));
+  m_colors->append(QVector4D(0, 1, 0, 1));
 
-  m_colors->append(QVector3D(0, 0, 1));
-  m_colors->append(QVector3D(0, 0, 1));
+  m_colors->append(QVector4D(0, 0, 1, 1));
+  m_colors->append(QVector4D(0, 0, 1, 1));
 }
 
 Axis::~Axis()
@@ -39,7 +39,7 @@ void Axis::createBuffers(QOpenGLFunctions_4_1_Core *glFunctions)
   glFunctions->glGenBuffers(1, &m_colourBO);
   glFunctions->glBindBuffer(GL_ARRAY_BUFFER, m_colourBO);
   glFunctions->glEnableVertexAttribArray(1);
-  glFunctions->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glFunctions->glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
   glFunctions->glBindVertexArray(0);
 }

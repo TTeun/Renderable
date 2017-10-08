@@ -16,7 +16,7 @@ public:
 
 protected:
   std::unique_ptr<QVector<QVector3D>> m_vertices;
-  std::unique_ptr<QVector<QVector3D>> m_colors;
+  std::unique_ptr<QVector<QVector4D>> m_colors;
 
   uint m_coordsBO;
   uint m_colourBO;

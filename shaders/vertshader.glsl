@@ -16,6 +16,6 @@ void main() {
   gl_Position = projectionMatrix * modelViewMatrix * vec4(in_coords, 1.0);
   out_coords = gl_Position.xyz;
   out_colour = in_colour;
-  vec4 t_normal = projectionMatrix * vec4(in_normal, 0.0);
+  vec4 t_normal = vec4(in_normal, 0.0);
   out_normal = t_normal.xyz;
 }

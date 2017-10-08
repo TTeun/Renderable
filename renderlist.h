@@ -4,7 +4,9 @@
 #include "RenderableObjects/axis.h"
 #include "RenderableObjects/ballrenderable.h"
 #include "ShaderHandler/blackshader.h"
+#include "ShaderHandler/flatshader.h"
 #include "ShaderHandler/mainshader.h"
+#include "ShaderHandler/normalshader.h"
 #include "openglwindow.h"
 #include <QVector>
 #include <QtCore/qmath.h>
@@ -25,6 +27,8 @@ public:
 private:
   MainShader *m_mainShader;
   BlackShader *m_blackShader;
+  FlatShader *m_flatshader;
+  NormalShader *m_normalShader;
 
   QVector3D m_lightPos;
   unique_ptr<BallRenderable> ball;

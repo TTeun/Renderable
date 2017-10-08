@@ -4,7 +4,10 @@
         <file>shaders/vertshader.glsl</file>
         <file>shaders/frag_black.glsl</file>
         <file>shaders/vert_black.glsl</file>
-        <file>shaders/vertshader_simple.glsl</file>
-        <file>shaders/fragshader_simple.glsl</file>
+        <file>shaders/frag_geo.glsl</file>
+        <file>shaders/geo_norm.glsl</file>
+        <file>shaders/vert_geo.glsl</file>
+        <file>shaders/vert_flat.glsl</file>
+        <file>shaders/frag_flat.glsl</file>
     </qresource>
 </RCC>

@@ -32,7 +32,9 @@ SOURCES += \
     RenderableObjects/surfacerenderable.cpp \
     RenderableObjects/ballrenderable.cpp \
     ShaderHandler/mainshader.cpp \
-    ShaderHandler/blackshader.cpp
+    ShaderHandler/blackshader.cpp \
+    ShaderHandler/flatshader.cpp \
+    ShaderHandler/normalshader.cpp
 
 HEADERS += \
     openglwindow.h \
@@ -42,7 +44,9 @@ HEADERS += \
     RenderableObjects/surfacerenderable.h \
     RenderableObjects/ballrenderable.h \
     ShaderHandler/mainshader.h \
-    ShaderHandler/blackshader.h
+    ShaderHandler/blackshader.h \
+    ShaderHandler/flatshader.h \
+    ShaderHandler/normalshader.h
 
 RESOURCES += \
       resources.qrc

@@ -27,7 +27,6 @@ void SurfaceRenderable::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x
   glFunctions->glBindVertexArray(m_vao);
 
   updateBuffers(glFunctions);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
 }
 

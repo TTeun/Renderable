@@ -32,8 +32,8 @@ void BallRenderable::create()
   m_indices->clear();
   m_indices->squeeze();
 
-  size_t polar_slices = 20;
-  size_t azi_slices   = 10;
+  size_t polar_slices = 30;
+  size_t azi_slices   = 15;
   uint index;
 
   double d_polar = 2 * M_PI / static_cast<double>(polar_slices);
@@ -66,8 +66,8 @@ void BallRenderable::create()
 
   for (size_t i = 0; i != m_vertices->size(); ++i)
   {
-    m_colors->append(QVector4D(0.9, 0.9, 0.9, 0.2));
-    m_normals->append(m_vertices->at(i));
+    m_colors->append(QVector4D(0.7, 0.7, 0.62, 0.2));
+    m_normals->append(m_vertices->at(i).normalized());
   }
 }
 
@@ -76,6 +76,5 @@ void BallRenderable::renderSkeleton(QOpenGLFunctions_4_1_Core *glFunctions, QMat
   glFunctions->glBindVertexArray(m_vao);
 
   updateBuffers(glFunctions);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
+  glFunctions->glDrawElements(GL_LINES, m_indices->size(), GL_UNSIGNED_INT, 0);
 }
