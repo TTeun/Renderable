@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>shaders/fragshader.glsl</file>
         <file>shaders/vertshader.glsl</file>
+        <file>shaders/frag_black.glsl</file>
+        <file>shaders/vert_black.glsl</file>
         <file>shaders/vertshader_simple.glsl</file>
         <file>shaders/fragshader_simple.glsl</file>
     </qresource>

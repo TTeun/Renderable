@@ -20,7 +20,7 @@ public:
   void render() override;
 
 private:
-  unique_ptr<BallRenderable> ball;
+  unique_ptr<SurfaceRenderable> ball;
   unique_ptr<Axis> axis;
   QMatrix4x4 m_projectionMatrix;
   float nsAngle = 0.0f;

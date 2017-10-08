@@ -10,6 +10,7 @@ SurfaceRenderable::SurfaceRenderable()
       m_normals(new QVector<QVector3D>()),
       m_indices(new QVector<unsigned int>())
 {
+  m_lightPos = QVector3D(0.0, -4.0, -10);
 }
 
 SurfaceRenderable::~SurfaceRenderable()
@@ -32,6 +33,7 @@ void SurfaceRenderable::createShader(QObject *obj)
   m_projecionMatrixUniform = m_shaderProgram->uniformLocation("projectionMatrix");
   m_modelViewMatrixUniform = m_shaderProgram->uniformLocation("modelViewMatrix");
   m_readNormalsUniform     = m_shaderProgram->uniformLocation("readNormals");
+  m_lightPosUniform        = m_shaderProgram->uniformLocation("lightPos");
 }
 
 void SurfaceRenderable::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x4 &projectionMatrix)
@@ -43,8 +45,12 @@ void SurfaceRenderable::render(QOpenGLFunctions_4_1_Core *glFunctions, QMatrix4x
   m_shaderProgram->setUniformValue(m_modelViewMatrixUniform, m_modelViewMatrix);
   m_shaderProgram->setUniformValue(m_projecionMatrixUniform, projectionMatrix);
   m_shaderProgram->setUniformValue(m_readNormalsUniform, m_state.readNormals);
+  m_shaderProgram->setUniformValue(m_lightPosUniform, m_lightPos);
+
   updateBuffers(glFunctions);
-  glPolygonMode(GL_FRONT_AND_BACK, m_state.polygonMode);
+  //  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  //  glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glFunctions->glDrawElements(GL_TRIANGLES, m_indices->size(), GL_UNSIGNED_INT, 0);
 
   m_shaderProgram->release();

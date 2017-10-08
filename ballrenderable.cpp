@@ -33,8 +33,8 @@ void BallRenderable::create()
   m_indices->clear();
   m_indices->squeeze();
 
-  size_t polar_slices = 200;
-  size_t azi_slices   = 100;
+  size_t polar_slices = 20;
+  size_t azi_slices   = 10;
   uint index;
 
   double d_polar = 2 * M_PI / static_cast<double>(polar_slices);
@@ -68,6 +68,6 @@ void BallRenderable::create()
   for (size_t i = 0; i != m_vertices->size(); ++i)
   {
     m_colors->append(QVector4D(0.9, 0.9, 0.9, 0.2));
-    m_normals->append(-m_vertices->at(i));
+    m_normals->append(m_vertices->at(i));
   }
 }

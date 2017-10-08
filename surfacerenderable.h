@@ -41,6 +41,8 @@ protected:
   GLint m_projecionMatrixUniform;
   GLint m_modelViewMatrixUniform;
   GLint m_readNormalsUniform;
+  GLint m_lightPosUniform;
+  QVector3D m_lightPos;
 
   struct State
   {
